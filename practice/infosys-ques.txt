@@ -1,0 +1,289 @@
+Find all indices of a given element in sorted form of given Array
+def targetIndices(nums, val):
+    count_less = 0
+    count_target = 0
+ 
+    # Loop to count smaller elements and val
+    for i in range(len(nums)):
+        if (nums[i] == val):
+            count_target += 1
+        if (nums[i] < val):
+            count_less += 1
+ 
+    # List to store indices
+    ans = []
+    while (count_target):
+        ans.append(count_less)
+        count_less += 1
+        count_target -= 1
+    return ans
+ 
+ 
+# Driver code
+nums = [1, 2, 5, 2, 3]
+val = 2
+ans = targetIndices(nums, val)
+ 
+# Loop to print indices
+for i in range(len(ans)):
+    print(ans[i], end=" ")
+ 
+--------------------------------------------------------------
+Program to add two binary strings-->
+def add_binary_nums(x, y):
+        max_len = max(len(x), len(y))
+ 
+        x = x.zfill(max_len)
+        y = y.zfill(max_len)
+         
+        # initialize the result
+        result = ''
+         
+        # initialize the carry
+        carry = 0
+ 
+        # Traverse the string
+        for i in range(max_len - 1, -1, -1):
+            r = carry
+            r += 1 if x[i] == '1' else 0
+            r += 1 if y[i] == '1' else 0
+            result = ('1' if r % 2 == 1 else '0') + result
+            carry = 0 if r < 2 else 1     # Compute the carry.
+         
+        if carry !=0 : result = '1' + result
+ 
+        return result.zfill(max_len)
+ 
+# Driver code
+print(add_binary_nums('1101', '100'))
+------------------------------------------------------------------ 
+Get Maximum in Generated Array-->
+
+def getMaximumGenerated(self, n: int) -> int:
+            nums = [0] *(3000)
+            nums[0] = 0 
+            nums[1] = 1
+            for i in range(n):
+                if 2 <= 2*i <= n:
+                    nums[2*i] = nums[i]
+                if 2<=2*i+1 <= n:
+                    nums[2*i+1] = nums[i] + nums[i+1]
+            return max(nums[:n+1])
+
+
+----------------------------------------------------------------------
+
+
+## Python program to solve Gold Mine problem
+def collectGold(gold, x, y, n, m):
+ 
+    # Base condition.
+    if ((x < 0) or (x == n) or (y == m)): 
+        return 0
+ 
+    # Right upper diagonal
+    rightUpperDiagonal = collectGold(gold, x - 1, y + 1, n, m)
+ 
+     # right
+    right = collectGold(gold, x, y + 1, n, m)
+ 
+    # Lower right diagonal
+    rightLowerDiagonal = collectGold(gold, x + 1, y + 1, n, m)
+ 
+    # Return the maximum and store the value
+    return  gold[x][y] + max(max(rightUpperDiagonal, rightLowerDiagonal), right) 
+ 
+ 
+def getMaxGold(gold,n,m):
+ 
+    maxGold = 0
+ 
+    for i in range(n):
+ 
+        # Recursive function call for  ith row.
+        goldCollected = collectGold(gold, i, 0, n, m)
+        maxGold = max(maxGold, goldCollected)
+ 
+    return maxGold
+ 
+# Driver Code
+gold = [[1, 3, 1, 5],
+        [2, 2, 4, 1],
+        [5, 0, 2, 3],
+        [0, 6, 1, 2]
+]
+ 
+m,n = 4,4
+print(getMaxGold(gold, n, m))
+
+------------------------------------------------------------
+Egg Drop With 2 Eggs and N Floors-->
+
+return round(math.sqrt(2*n))
+
+---------------------------------------------------------------
+JUMP GAME-->
+
+ def jump(self, nums: List[int]) -> int:
+        res = 0
+        l = r = 0
+        while r < len(nums) - 1:
+            farthest = 0
+            for i in range(l, r + 1):
+                farthest = max(farthest, i + nums[i])
+            l = r + 1
+            r = farthest
+            res += 1
+        return res
+
+-------------------------------------------------------------
+Trapping Rain Water-->
+# Python3 implementation of the approach
+ 
+# Function to return the maximum
+# water that can be stored
+def maxWater(arr, n):
+ 
+    # To store the maximum water
+    # that can be stored
+    res = 0
+ 
+    # For every element of the array
+    for i in range(1, n - 1):
+ 
+        # Find the maximum element on its left
+        left = arr[i]
+        for j in range(i):
+            left = max(left, arr[j])
+ 
+        # Find the maximum element on its right
+        right = arr[i]
+ 
+        for j in range(i + 1, n):
+            right = max(right, arr[j])
+ 
+        # Update the maximum water
+        res = res + (min(left, right) - arr[i])
+ 
+    return res
+ 
+ 
+# Driver code
+if __name__ == "__main__":
+ 
+    arr = [0, 1, 0, 2, 1, 0,
+           1, 3, 2, 1, 2, 1]
+    n = len(arr)
+ 
+    print(maxWater(arr, n))
+------------------------------------------------------------
+coin change-->
+
+# Dynamic Programming Python implementation of Coin
+# Change problem
+def count(S, m, n):
+ 
+    # table[i] will be storing the number of solutions for
+    # value i. We need n+1 rows as the table is constructed
+    # in bottom up manner using the base case (n = 0)
+    # Initialize all table values as 0
+    table = [0 for k in range(n+1)]
+ 
+    # Base case (If given value is 0)
+    table[0] = 1
+ 
+    # Pick all coins one by one and update the table[] values
+    # after the index greater than or equal to the value of the
+    # picked coin
+    for i in range(0,m):
+        for j in range(S[i],n+1):
+            table[j] += table[j-S[i]]
+ 
+    return table[n]
+ 
+# Driver program to test above function
+arr = [1, 2, 3]
+m = len(arr)
+n = 4
+x = count(arr, m, n)
+print (x)
+
+----------------------------------------------------------
+
+Longest Palindromic Substring-->
+
+import sys
+ 
+# A utility function to print a
+# substring str[low..high]
+def printSubStr(st, low, high) :
+    sys.stdout.write(st[low : high + 1])
+    sys.stdout.flush()
+    return ''
+ 
+# This function prints the longest palindrome
+# substring of st[]. It also returns the length
+# of the longest palindrome
+def longestPalSubstr(st) :
+    n = len(st) # get length of input string
+ 
+    # table[i][j] will be false if substring
+    # str[i..j] is not palindrome. Else
+    # table[i][j] will be true
+    table = [[0 for x in range(n)] for y
+                          in range(n)]
+     
+    # All substrings of length 1 are
+    # palindromes
+    maxLength = 1
+    i = 0
+    while (i < n) :
+        table[i][i] = True
+        i = i + 1
+     
+    # check for sub-string of length 2.
+    start = 0
+    i = 0
+    while i < n - 1 :
+        if (st[i] == st[i + 1]) :
+            table[i][i + 1] = True
+            start = i
+            maxLength = 2
+        i = i + 1
+     
+    # Check for lengths greater than 2.
+    # k is length of substring
+    k = 3
+    while k <= n :
+        # Fix the starting index
+        i = 0
+        while i < (n - k + 1) :
+             
+            # Get the ending index of
+            # substring from starting
+            # index i and length k
+            j = i + k - 1
+     
+            # checking for sub-string from
+            # ith index to jth index iff
+            # st[i + 1] to st[(j-1)] is a
+            # palindrome
+            if (table[i + 1][j - 1] and
+                      st[i] == st[j]) :
+                table[i][j] = True
+     
+                if (k > maxLength) :
+                    start = i
+                    maxLength = k
+            i = i + 1
+        k = k + 1
+    print "Longest palindrome substring is: ", printSubStr(st, start,
+                                               start + maxLength - 1)
+ 
+    return maxLength # return length of LPS
+ 
+ 
+# Driver program to test above functions
+st = "forgeeksskeegfor"
+l = longestPalSubstr(st)
+print "Length is:", l
